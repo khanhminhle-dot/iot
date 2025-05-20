@@ -1,22 +1,35 @@
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, jsonjfy
+from gpiozero import LED, Button
 import datetime
 
-app = Flask(__name__)
-status = True
+led = LED(17)
+button = Button(17, pull_up = True )
 
+def handle_button_press():
+    led.toggle()
+
+button.when_pressed = handle_button_press
+
+def cleanUp():
+    led.close()
+    button.close()
+    exit(0)
+
+app = Flask(__name__)
 @app.route("/")
 def index():
-    now = datetime.datetime.now().strftime("%H:%M:%S %d-%m-%Y")
-    print("-----------> Check: A user connected!")
-    return render_template("main.html", now=now, status=status)
+    return render_template("main.html")
 
-@app.route("/update")
-def updateStatus():
-    global status
-    statusUser = request.args.get("status", default="false").lower()
-    status = statusUser == "true"
-    print("Status cập nhật:", status)
-    return redirect("/")  # 👈 Trả về trang chủ sau khi cập nhật
+@app.router("/status")
+def status():
+    status = True if led.value == 1 else False
+    response = {
+        "status" : status
+    }
+    return jsonjfy(response)
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    try: 
+        app.run(host = "0.0.0.0", port=5001, debug=True, reloader=False)
+    finally:
+        claenUp()

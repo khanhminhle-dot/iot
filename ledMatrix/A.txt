@@ -1,0 +1,31 @@
+const int rowPins[8] = {2,3,4,5,6,7,8,9};
+const int colPins[8] = {10,11,12,13,A0,A1,A2,A3};
+
+byte bitMap[8] = {
+    B00010001,
+    B00010010,
+    B00010100,
+    B00011000,
+    B00010100,
+    B00010010,
+    B00010001,
+    B00010000
+}
+void setup(){
+    for(int i=0; i< 8; i++){
+        pinMode(rowPins[i], OUTPUT);
+        pinMode(colPins[i], OUTPUT);
+
+        digitalWrite(rowPins[i], HIGH);
+    }
+}
+void loop(){
+    for(int row = 0; row < 8; row ++){
+        digitalWrite(rowPins[row], LOW);
+        for(int col = 0; col < 8; col ++){
+            digitalWrite(colPins[col], !bitRead(bitmap[row], 7-col))
+        }
+        delay(1);
+        digitalWrite(rowPins[row], HIGH)
+    }
+}

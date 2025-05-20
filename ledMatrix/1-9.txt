@@ -1,0 +1,65 @@
+const int rowPins = {2,3,4,5,6,7,8,9};
+const int colPins = {10,11,12,13,A0,A1,A2,A3};
+
+# duyệt số 0 - 9
+byte numbers[10][8]{
+    // số 0
+    {
+        B00011000,
+        B00100100,
+        B01000010,
+        B01000010,
+        B01000010,
+        B01000010,
+        B00100100,
+        B00011000,
+    }
+    // so 1
+    {
+        B00001000,
+        B00011000,
+        B00001000,
+        B00001000,
+        B00001000,
+        B00001000,
+        B00001000,
+        B00011100,
+    }
+    // so2
+    {
+        B00001000,
+        B00010100,
+        B00000100,
+        B00000100,
+        B00001000,
+        B00010000,
+        B00100000,
+        B00111110
+    }
+} 
+void setup(){
+    for(int i=0 ; i < 8; i++){
+        pinMode(rowPins[i], OUTPUT);
+        pinMode(colPins[i], OUTPUT);
+
+        digitalWrite(rowPins[i], HIGH)
+    }
+}
+void loop(){
+    for(int num = 1; num <= 9; num++){
+        for(int i =0 ; i < 125 ; i++ ){
+            display(num)
+        }
+    }
+}
+
+void display( int nums = 1){
+    for(int row = 0; row < 8 ; i++){
+        digitalWrite(rowPins[row], LOW);
+        for(int j = 0; j< 8; j++){
+            digitalWrite(colPins[col], bitRead(numbers[num][row], 7-col));
+        }
+        delay(1);
+        digitalWrite(rowPins[row], HIGH)
+    }
+}
