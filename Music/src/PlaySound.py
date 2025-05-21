@@ -11,9 +11,9 @@ screen = pygame.display.set_mode((300, 100))
 pygame.display.set_caption("Soundboard với bàn phím")
 
 # Load file âm thanh (bạn đổi tên đường dẫn nếu cần)
-soundA = pygame.mixer.Sound("music/A.mp3")
-soundB = pygame.mixer.Sound("music/B.mp3")
-soundC = pygame.mixer.Sound("music/C.mp3")
+soundA = pygame.mixer.Sound("../music/A.mp3")
+soundB = pygame.mixer.Sound("../music/B.mp3")
+soundC = pygame.mixer.Sound("../music/C.mp3")
 
 # Kênh riêng cho mỗi âm thanh
 channelA = pygame.mixer.Channel(1)
